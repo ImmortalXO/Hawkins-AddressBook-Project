@@ -46,7 +46,7 @@ public:
     // Constructor with parameters
     // Formal parameters: int month, int day, int year
     // User inputs: month, day, year
-    // Supplied constants: None
+    // Supplied constants: N/A
     // Outputs: None
     // Preconditions: None
     // Postconditions: Initializes the object with the specified date or 1/1/1900
