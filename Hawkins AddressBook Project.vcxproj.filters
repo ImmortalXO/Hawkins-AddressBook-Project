@@ -15,10 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="addressType.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="dateType.cpp">
+    <ClCompile Include="extPersonType.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -27,6 +24,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dateType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="extPersonType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
