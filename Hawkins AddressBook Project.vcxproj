@@ -128,7 +128,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="addressType.cpp" />
-    <ClCompile Include="Hawkins AddressBook Project.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="addressType.h" />
