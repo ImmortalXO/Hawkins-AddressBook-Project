@@ -17,7 +17,7 @@ public:
     // Outputs: day
     // Preconditions: None
     // Postconditions: Returns the day component of the date.
-    int getDay() { return dDay; }
+    int getDay() const { return dDay; }
 
     // Accessor function to get the month
     // Formal parameters: None
@@ -26,7 +26,7 @@ public:
     // Outputs: month
     // Preconditions: None
     // Postconditions: Returns the month component of the date.
-    int getMonth() { return dMonth; }
+    int getMonth() const { return dMonth; }
 
     // Accessor function to get the year
     // Formal parameters: None
@@ -35,7 +35,7 @@ public:
     // Outputs: year
     // Preconditions: None
     // Postconditions: Returns the year component of the date.
-    int getYear() { return dYear; }
+    int getYear() const { return dYear; }
 
     dateType() {
         dMonth = 1;
@@ -119,6 +119,6 @@ public:
     // Outputs: None
     // Preconditions: None
     // Postconditions: Prints the date to the standard output.
-    void print() { cout << dMonth << "-" << dDay << "-" << dYear << endl; }
+    void print() const { cout << dMonth << "-" << dDay << "-" << dYear << endl; }
 };
 

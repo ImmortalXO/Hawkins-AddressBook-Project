@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <cassert>
 #include "addressType.h"
 #include "dateType.h"
 using namespace std;
@@ -11,25 +12,23 @@ private:
 	string firstName;
 	string lastName;
 public:
-	personType(const string &first = "", const string& last = "") {
-		firstName = first;
-		lastName = last;
+	personType(const string& first = "", const string& last = "") : firstName(first), lastName(last) {
 	};
 
-	string getLastName() {
+	string getLastName() const {
 		return lastName;
 	};
 
-	string getFirstName() {
+	string getFirstName() const {
 		return firstName;
 	};
 
-	void setFirstName(string& first) {
+	void setFirstName(const string& first) {
 		firstName = first;
 	};
 
 
-	void setLastName(string& last) {
+	void setLastName(const string& last) {
 		lastName = last;
 	};
 };
@@ -42,13 +41,16 @@ private:
 	string phoneNumber;
 	string relationship;
 public:
-	extPersonType(const string& first = "", const string& last = "", int m = 1, int d = 1, int yr = 1900, 
-	const string &street = "", const string &cityName = "", const string &stateName = "XX", int zipcode = 10000, 
-	const string &phoneNum = "None", const string &rel = "None") {
+	extPersonType() : personType(), phoneNumber(""), relationship(""), birthDate(), address() {}
 
-	}
+	extPersonType(const string& first = "", const string& last = "", int m = 1, int d = 1, int yr = 1900,
+		const string& street = "", const string& cityName = "", const string& stateName = "XX", int zipcode = 10000,
+		const string& phoneNum = "None", const string& rel = "None") : personType(first, last), birthDate(m, d, yr), address(street, cityName, stateName, zipcode),
+		phoneNumber(phoneNum), relationship(rel) {
+		birthDate.setDate(m, d, yr);
+	};
 
-	string getPhoneNumber() {
+	string getPhoneNumber() const {
 		return phoneNumber;
 	};
 
@@ -56,22 +58,25 @@ public:
 		phoneNumber = phoneNum;
 	};
 
-	string getRelationship() {
+	string getRelationship() const {
 		return relationship;
 	};
 
-	void setRelationship(string& rel) {
+	void setRelationship(const string& rel) {
 		if (rel == "Friend" || rel == "Family" || rel == "Business") {
 			relationship = rel;
 		}
+		else {
+			relationship = "None";
+		}
 	};
 
-	int getBirthMonth() {
+	int getBirthMonth() const {
 		return birthDate.getMonth();
 	};
 
-	void print() {
-		cout << personType::getFirstName() << " " << personType::getLastName() << endl;
+	void print() const {
+		cout << getFirstName() << " " << getLastName() << endl;
 		birthDate.print();
 		address.print();
 		cout << "Phone Number: " << phoneNumber << endl;
