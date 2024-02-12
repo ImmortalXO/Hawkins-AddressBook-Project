@@ -69,9 +69,6 @@ public:
         }
         else {
             isInvalidDate = true;
-            dYear = 1900;
-            dMonth = 1;
-            dDay = 1;
         }
 
         if (month >= 1 && month <= 12) {
@@ -79,9 +76,6 @@ public:
         }
         else {
             isInvalidDate = true;
-            dMonth = 1;
-            dDay = 1;
-            dYear = 1900;
         }
 
         int getLastDayOfMon = (month == 2 && isLeapYear(dYear) ? 29 : 28);
@@ -90,12 +84,12 @@ public:
         }
         else {
             isInvalidDate = true;
-            dDay = 1;
-            dMonth = 1;
-            dYear = 1900;
         }
 
         if (isInvalidDate) {
+            dMonth = 1;
+            dDay = 1;
+            dYear = 1900;
             cout << "Date invalid, setting to 1/1/1900" << endl;
         }
     };
