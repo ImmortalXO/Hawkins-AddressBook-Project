@@ -68,15 +68,6 @@ private:
     string relationship;
 
 public:
-    // Constructor with default values
-    // Formal parameters: None
-    // User inputs: None
-    // Supplied constants: N/A
-    // Outputs: None
-    // Preconditions: None
-    // Postconditions: Initializes the object with default values.
-    extPersonType() : personType(), phoneNumber(""), relationship(""), birthDate(), address() {}
-
     // Constructor with parameters
     // Formal parameters: const string& first, const string& last, int m, int d, int yr, const string& street, const string& cityName, const string& stateName, int zipcode, const string& phoneNum, const string& rel
     // User inputs: first name, last name, birth date (month, day, year), address details (street, city name, state name, zipcode), phone number, relationship
