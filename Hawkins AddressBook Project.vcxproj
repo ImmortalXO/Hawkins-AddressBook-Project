@@ -128,7 +128,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="addressBookType.cpp" />
-    <ClCompile Include="extPersonType.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="addressBookType.h" />

@@ -41,7 +41,7 @@ private:
 	string phoneNumber;
 	string relationship;
 public:
-	extPersonType() : personType(), phoneNumber(""), relationship(""), birthDate(), address() {}
+	// extPersonType() : personType(), phoneNumber(""), relationship(""), birthDate(), address() {}
 
 	extPersonType(const string& first = "", const string& last = "", int m = 1, int d = 1, int yr = 1900,
 		const string& street = "", const string& cityName = "", const string& stateName = "XX", int zipcode = 10000,
