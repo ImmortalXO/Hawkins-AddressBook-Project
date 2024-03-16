@@ -115,7 +115,7 @@ void orderedLinkedList<Type>::deleteNode(const Type& deleteItem)
 {
 	nodeType<Type>* current; //pointer to traverse the list
 	nodeType<Type>* trailCurrent = nullptr; //pointer just
-	//before current
+	//before current.
 	bool found;
 	if (this->first == nullptr) //Case 1
 		cout << "Cannot delete from an empty list." << endl;
