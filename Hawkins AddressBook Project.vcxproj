@@ -134,6 +134,8 @@
     <ClInclude Include="addressType.h" />
     <ClInclude Include="dateType.h" />
     <ClInclude Include="extPersonType.h" />
+    <ClInclude Include="linkedList.h" />
+    <ClInclude Include="orderedLinkedList.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="addressBookData.txt" />
