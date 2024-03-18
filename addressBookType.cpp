@@ -14,7 +14,9 @@ int showMenu() {
 	cout << "1. Find By Person" << endl;
 	cout << "2. Find By Birth Month" << endl;
 	cout << "3. Find By Relationship" << endl;
-	cout << "4. Quit" << endl;
+	cout << "4. Add a New Entry" << endl;
+	cout << "5. Remove an Entry" << endl;
+	cout << "6. Quit" << endl;
 	cout << "--------------------" << endl;
 	cout << "Choice: ";
 	cin >> choice;
@@ -50,10 +52,16 @@ int main() {
 			break;
 		}
 		case 4: {
+			obj.addNewEntry();
+		}
+		case 5: {
+			obj.removeNewEntry();
+		}
+		case 6: {
 			break;
 		}
 		default:
 			cout << "Invalid choice." << endl;
 		}
-	} while (choice != 4);
+	} while (choice != 7);
 };

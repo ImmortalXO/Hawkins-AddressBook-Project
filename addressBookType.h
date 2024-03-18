@@ -4,14 +4,12 @@
 #include <fstream>
 #include <sstream>
 #include "extPersonType.h"
+#include "orderedLinkedList.h"
 using namespace std;
 
-class addressBookType
+class addressBookType : public orderedLinkedList<extPersonType>
 {
 private:
-	extPersonType addressList[500];
-	int length;
-	int maxLength;
 public:
     // Constructor
     // Formal parameters: None
@@ -20,10 +18,7 @@ public:
     // Outputs: None
     // Preconditions: None
     // Postconditions: Initializes the address book with empty values.
-    addressBookType() {
-        length = 0;
-        maxLength = 500;
-    }
+    addressBookType();
 
     // Function to read entries from a file and initialize the address book
     // Formal parameters: const string& fileName
@@ -60,6 +55,29 @@ public:
         inFile.close();
     };
 
+    void saveInfoToFile(const string &fileName) const {
+        ofstream outputFile(fileName);
+        nodeType<extPersonType>* current = first;
+        if (!outputFile.is_open()) {
+            cerr << "Error opening the data file for writing.";
+        };
+
+        while (current != nullptr) {
+            outputFile << current->info.getFirstName() << " "
+                << current->info.getLastName() << " "
+                << current->info.getBirthMonth() << " "
+                << current->info.getBirthDay() << " "
+                << current->info.getBirthYear() << " "
+                << current->info.getPhoneNumber() << " "
+                << current->info.getRelationship() << " "
+                << current->info.getAddress().getStreet() << " "
+                << current->info.getAddress().getCity() << " "
+                << current->info.getAddress().getState() << " "
+                << current->info.getZipCode() << endl;
+            current = current->link;
+        }
+    }
+
     // Function to add an entry to the address book
     // Formal parameters: const extPersonType& person
     // User inputs: extPersonType object
@@ -68,11 +86,62 @@ public:
     // Preconditions: None
     // Postconditions: Adds the provided extPersonType object to the address book if there is space available.
     void addEntry(const extPersonType& person) {
-        if (length < maxLength) {
-            addressList[length] = person;
-            length++;
-        };
+        this->insert(person);
     };
+
+    void addNewEntry() {
+        string firstName, lastName, street, cityName, stateName, phoneNumber, relationship;
+        int birthMonth, birthDay, birthYear, zipcode;
+
+        cout << "Enter a first name: ";
+        cin >> firstName;
+        cout << "Enter a last name: ";
+        cin >> lastName;
+        cout << "Enter a birth month: ";
+        cin >> birthMonth;
+        cout << "Enter a birth day: ";
+        cin >> birthDay;
+        cout << "Enter a birth year: ";
+        cin >> birthYear;
+        cout << "Enter a street name: ";
+        cin.ignore();
+        getline(cin, street);
+        cout << "Enter a city name: ";
+        getline(cin, cityName);
+        cout << "Enter a state name: ";
+        getline(cin, stateName);
+        cout << "Enter a zipcode: ";
+        cin >> zipcode;
+        cout << "Enter a phone number: ";
+        cin >> phoneNumber;
+        cout << "Enter a relationship: ";
+        cin.ignore();
+        getline(cin, relationship);
+
+        extPersonType newPerson(firstName, lastName, birthMonth, birthDay, birthYear, street, cityName, stateName, zipcode, phoneNumber, relationship);
+
+        this->insert(newPerson);
+        
+        cout << "You have added a new Person!" << endl;
+
+    }
+
+    void removeNewEntry() {
+        string firstName, lastName, fullName;
+        cout << "Enter the first name of the person you want to remove: ";
+        cin >> firstName;
+        cout << "Enter the last name of the person you want to remove: ";
+        cin >> lastName;
+        string fullName = firstName + " " + lastName;
+
+        if (this->search(fullName)) {
+            this->deleteNode(fullName);
+            cout << "Deleted the person with the name: " << fullName << endl;
+        }
+        else {
+            cout << "Could not find person with the name: " << endl;
+        }
+    }
 
     // Function to find a person by last name and print their details
     // Formal parameters: const string& last
@@ -81,17 +150,21 @@ public:
     // Outputs: None
     // Preconditions: None
     // Postconditions: Prints the details of the person with the specified last name if found.
-    void findPerson(const string& last) const {
+    void findPerson(const string& name) const {
         bool found = false;
-        for (int i = 0; i < length; i++) {
-            if (addressList[i].getLastName() == last) {
-                addressList[i].print();
+        nodeType<extPersonType> *current = first;
+        while (current != nullptr) {
+            string key = current->info.getFirstName() + " " + current->info.getLastName();
+            if (key == name) {
+                current->info.print();
                 found = true;
                 break;
             }
+            current = current->link;
+
         }
         if (!found) {
-            cout << "Could not find a person with the last name of: " << last << endl;
+            cout << "Could not find a person with the last name of: " << name << endl;
         }
     };
 
@@ -104,12 +177,14 @@ public:
     // Postconditions: Prints the details of persons with birthdays in the specified month if found.
     void findBirthdays(int mon) const {
         bool found = false;
-        for (int i = 0; i < length; i++) {
-            if (addressList[i].getBirthMonth() == mon) {
-                addressList[i].print();
+        nodeType<extPersonType>* current = first;
+        while (current != nullptr) {
+            if (current->info.getBirthMonth() == mon) {
+                current->info.print();
                 found = true;
                 break;
             }
+            current = current->link;
         }
         if (!found) {
             cout << "Could not find a person with the birth month of: " << mon << endl;
@@ -125,12 +200,14 @@ public:
     // Postconditions: Prints the details of persons with the specified relationship if found.
     void findRelations(const string& relation) const {
         bool found = false;
-        for (int i = 0; i < length; i++) {
-            if (addressList[i].getRelationship() == relation) {
-                addressList[i].print();
+        nodeType<extPersonType>* current = first;
+        while (current != nullptr) {
+            if (current->info.getRelationship() == relation) {
+                current->info.print();
                 found = true;
                 break;
             }
+            current = current->link;
         }
         if (!found) {
             cout << "Could not find a person with the relationship of: " << relation << endl;
@@ -145,34 +222,11 @@ public:
     // Preconditions: None
     // Postconditions: Prints the details of all entries in the address book.
     void print() const {
-        for (int i = 0; i < length; i++) {
-            addressList[i].print();
+        nodeType<extPersonType>* current = first;
+        while (current != nullptr) {
+            current->info.print();
+            current = current->link;
         }
-    };
-
-    // Function to sort the entries in the address book by last name
-    // Formal parameters: None
-    // User inputs: None
-    // Supplied constants: N/A
-    // Outputs: None
-    // Preconditions: None
-    // Postconditions: Sorts the entries in the address book by last name.
-    void sortEntries() {
-        for (int i = 1; i < length; i++) {
-            extPersonType current = addressList[i];
-            bool placeFound = false;
-            int j = i - 1;
-            while (j >= 0 && !placeFound) {
-                if (addressList[j].getLastName() > current.getLastName()) {
-                    addressList[j + 1] = addressList[j];
-                    j--;
-                }
-                else {
-                    placeFound = true;
-                };
-            };
-            addressList[j + 1] = current;
-        };
     };
 };
 
