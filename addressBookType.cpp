@@ -56,15 +56,18 @@ int main() {
 		}
 		case 4: {
 			obj.addNewEntry();
+			break;
 		}
 		case 5: {
 			obj.removeNewEntry();
+			break;
 		}
 		case 6: {
+			obj.saveInfoToFile("addressBookData.txt");
 			break;
 		}
 		default:
 			cout << "Invalid choice." << endl;
 		}
-	} while (choice != 7);
+	} while (choice != 6);
 };

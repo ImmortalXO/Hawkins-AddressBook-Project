@@ -18,6 +18,11 @@ public:
 		setZipcode(zip);  
 	}
 
+	string getStreet() { return address; };
+	string getCity() { return city; };
+	string getState() { return state; };
+	int getZipcode() { return zipcode; };
+
 	// Setter for streetAddress
 	// Formal parameters: street
 	// User inputs: street

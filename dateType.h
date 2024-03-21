@@ -84,8 +84,21 @@ public:
             dYear = 1900;
         }
 
-        int getLastDayOfMon = (month == 2 && isLeapYear(dYear) ? 29 : 28);
-        if (day >= 1 && day <= getLastDayOfMon) {
+        int getLastDayOfMonth = 0;
+        if (month == 2 && isLeapYear(dYear)) {
+            getLastDayOfMonth = 29;
+        }
+        else if (month == 2) {
+            getLastDayOfMonth = 28;
+        }
+        else if (month == 4 || month == 6 || month == 9 || month == 11) {
+            getLastDayOfMonth = 30;
+        }
+        else {
+            getLastDayOfMonth = 31;
+        }
+
+        if (day >= 1 && day <= getLastDayOfMonth) {
             dDay = day;
         }
         else {

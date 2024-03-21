@@ -60,6 +60,14 @@ public:
 		return relationship;
 	};
 
+	addressType getAddress() {
+		return address;
+	}
+
+	dateType getBirthDate() {
+		return birthDate;
+	}
+
 	void setRelationship(const string& rel) {
 		if (rel == "Friend" || rel == "Family" || rel == "Business") {
 			relationship = rel;
@@ -76,7 +84,7 @@ public:
 	string getKey() const {
 		return getFirstName() + " " + getLastName();
 	}
-	// Overload the relational operators
+
 	bool operator==(const extPersonType& other) const {
 		return getKey() == other.getKey();
 	}

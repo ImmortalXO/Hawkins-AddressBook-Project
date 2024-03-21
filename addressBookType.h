@@ -11,14 +11,6 @@ class addressBookType : public orderedLinkedList<extPersonType>
 {
 private:
 public:
-    // Constructor
-    // Formal parameters: None
-    // User inputs: None
-    // Supplied constants: None
-    // Outputs: None
-    // Preconditions: None
-    // Postconditions: Initializes the address book with empty values.
-
     // Function to read entries from a file and initialize the address book
     // Formal parameters: const string& fileName
     // User inputs: File name containing address book data
@@ -54,7 +46,15 @@ public:
         inFile.close();
     };
 
-   /* void saveInfoToFile(const string& fileName) const {
+
+    // Function to save address book data to a file.
+    // Formal parameters: const string& fileName
+    // User input(s): File name to save the address book data.
+    // Supplied constants: N/A
+    // Outputs: None
+    // Preconditions: Output file exists and is accessible.
+    // Postconditions: Writes address book data to the specified file, overwriting existing data if the file already exists.
+    void saveInfoToFile(const string& fileName) const {
         ofstream outputFile(fileName);
         nodeType<extPersonType>* current = first;
         if (!outputFile.is_open()) {
@@ -62,20 +62,21 @@ public:
         };
 
         while (current != nullptr) {
-            outputFile << current->info.getFirstName() << " "
-                << current->info.getLastName() << " "
-                << current->info.getBirthMonth() << " "
-                << current->info.getBirthDay() << " "
-                << current->info.getBirthYear() << " "
-                << current->info.getPhoneNumber() << " "
-                << current->info.getRelationship() << " "
-                << current->info.getAddress().getStreet() << " "
-                << current->info.getAddress().getCity() << " "
-                << current->info.getAddress().getState() << " "
-                << current->info.getZipCode() << endl;
+            outputFile << current->info.getFirstName() << " " << current->info.getLastName() << endl;
+            outputFile << current->info.getBirthMonth() << " " << current->info.getBirthDate().getDay() << " " << current->info.getBirthDate().getYear() << endl;
+            outputFile << current->info.getAddress().getStreet() << endl;
+            outputFile << current->info.getAddress().getCity() << endl;
+            outputFile << current->info.getAddress().getState() << endl;
+            outputFile << current->info.getAddress().getZipcode() << endl;
+            outputFile << current->info.getPhoneNumber() << endl;
+            outputFile << current->info.getRelationship() << endl;
             current = current->link;
         }
-    } */
+
+        cout << "Data has been successfully saved to " << fileName << endl;
+
+        outputFile.close();
+    } 
 
     // Function to add an entry to the address book
     // Formal parameters: const extPersonType& person
@@ -88,6 +89,13 @@ public:
         this->insert(person);
     };
 
+    // Function to add a new entry to the address book.
+    // Formal parameters: None
+    // User inputs: firstName, lastName, birthMonth, birthDay, birthYear, streetName, cityName, stateName, zipcode, phoneNumber, relationship
+    // Supplied constants: N/A
+    // Outputs: None
+    // Preconditions: None
+    // Postconditions: Adds a new person object to the address book with the provided information.
     void addNewEntry() {
         string firstName, lastName, street, cityName, stateName, phoneNumber, relationship;
         int birthMonth, birthDay, birthYear, zipcode;
@@ -107,7 +115,7 @@ public:
         getline(cin, street);
         cout << "Enter a city name: ";
         getline(cin, cityName);
-        cout << "Enter a state name: ";
+        cout << "Enter a state name (Two Letter Abbr.): ";
         getline(cin, stateName);
         cout << "Enter a zipcode: ";
         cin >> zipcode;
@@ -125,18 +133,50 @@ public:
 
     }
 
+    // Function to remove an entry from the address book.
+    // Formal parameters: None
+    // User inputs: firstName, lastName
+    // Supplied constants: N/A
+    // Outputs: None
+    // Preconditions: None
+    // Postconditions: Removes the person with the provided first name and last name from the address book if found; otherwise, throws an error message.
+
     void removeNewEntry() {
-        string first, last, key;
+        string firstName, lastName, key;
 
-        cout << "Enter the first name of the person you want to delete: ";
-        cin >> first;
+        cout << "Enter the first name of the person you want to remove: ";
+        cin >> firstName;
 
-        cout << "Enter the last name of the person you want to delete: ";
-        cin >> last;
+        cout << "Enter the last name of the person you want to remove: ";
+        cin >> lastName;
 
-        key = first + " " + last;
+        key = firstName + " " + lastName;
 
-        deleteNode(last);
+        bool found = false;
+        nodeType<extPersonType>* current = first;
+        nodeType<extPersonType>* trail = nullptr;
+        while (current != nullptr) {
+            if (current->info.getKey() == key) {
+                found = true;
+                break;
+            }
+            trail = current;
+            current = current->link;
+        }
+
+        if (found) {
+            if (current == first) {
+                first = first->link;
+            }
+            else {
+                trail->link = current->link;
+            }
+            deleteNode(key);
+            cout << key << " has been removed." << endl;
+        }
+        else {
+            cout << "Could not find a person with the name of: " << key << endl;
+        }
     }
 
     // Function to find a person by last name and print their details
@@ -160,7 +200,7 @@ public:
 
         }
         if (!found) {
-            cout << "Could not find a person with the last name of: " << name << endl;
+            cout << "Could not find a person with the name of: " << name << endl;
         }
     };
 
