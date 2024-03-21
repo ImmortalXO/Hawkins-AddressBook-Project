@@ -18,7 +18,6 @@ public:
     // Outputs: None
     // Preconditions: None
     // Postconditions: Initializes the address book with empty values.
-    addressBookType();
 
     // Function to read entries from a file and initialize the address book
     // Formal parameters: const string& fileName
@@ -55,7 +54,7 @@ public:
         inFile.close();
     };
 
-    void saveInfoToFile(const string &fileName) const {
+   /* void saveInfoToFile(const string& fileName) const {
         ofstream outputFile(fileName);
         nodeType<extPersonType>* current = first;
         if (!outputFile.is_open()) {
@@ -76,7 +75,7 @@ public:
                 << current->info.getZipCode() << endl;
             current = current->link;
         }
-    }
+    } */
 
     // Function to add an entry to the address book
     // Formal parameters: const extPersonType& person
@@ -120,27 +119,24 @@ public:
 
         extPersonType newPerson(firstName, lastName, birthMonth, birthDay, birthYear, street, cityName, stateName, zipcode, phoneNumber, relationship);
 
-        this->insert(newPerson);
+        insert(newPerson);
         
         cout << "You have added a new Person!" << endl;
 
     }
 
     void removeNewEntry() {
-        string firstName, lastName, fullName;
-        cout << "Enter the first name of the person you want to remove: ";
-        cin >> firstName;
-        cout << "Enter the last name of the person you want to remove: ";
-        cin >> lastName;
-        string fullName = firstName + " " + lastName;
+        string first, last, key;
 
-        if (this->search(fullName)) {
-            this->deleteNode(fullName);
-            cout << "Deleted the person with the name: " << fullName << endl;
-        }
-        else {
-            cout << "Could not find person with the name: " << endl;
-        }
+        cout << "Enter the first name of the person you want to delete: ";
+        cin >> first;
+
+        cout << "Enter the last name of the person you want to delete: ";
+        cin >> last;
+
+        key = first + " " + last;
+
+        deleteNode(last);
     }
 
     // Function to find a person by last name and print their details

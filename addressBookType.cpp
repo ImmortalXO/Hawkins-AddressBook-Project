@@ -31,10 +31,13 @@ int main() {
 		choice = showMenu();
 		switch (choice) {
 		case 1: {
-			string last;
+			string first, last;
+			cout << "Enter the first name of the person you want to find: ";
+			cin >> first;
 			cout << "Enter the last name of the person you want to find: ";
 			cin >> last;
-			obj.findPerson(last);
+			string key = first + " " + last;
+			obj.findPerson(key);
 			break;
 		}
 		case 2: {
